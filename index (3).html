@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MK VIP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #001f3f;
+      color: gold;
+    }
+    .page {
+      padding: 20px;
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #002f5f;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid gold;
+    }
+    .bottom-nav button {
+      flex: 1;
+      padding: 15px;
+      background: none;
+      border: none;
+      color: gold;
+      font-size: 16px;
+    }
+    .login-page {
+      display: block;
+      text-align: center;
+      margin-top: 30%;
+    }
+    input[type="tel"] {
+      padding: 10px;
+      font-size: 18px;
+      width: 80%;
+      max-width: 300px;
+      margin: 10px auto;
+      display: block;
+      border: none;
+      border-radius: 5px;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-size: 18px;
+      background: gold;
+      border: none;
+      color: #001f3f;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-page" id="loginPage">
+  <h2>تسجيل الدخول</h2>
+  <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" />
+  <button class="btn" onclick="login()">دخول</button>
+</div>
+
+<div class="page" id="homePage">
+  <h2>الصفحة الرئيسية</h2>
+  <p>مرحباً بك في MK VIP</p>
+</div>
+
+<div class="page" id="accountPage">
+  <h2>حسابي</h2>
+  <p>الاسم: <span id="userName">-</span></p>
+  <p>رقم الهاتف: <span id="userPhone">-</span></p>
+  <p>ID: <span id="userID">12345</span></p>
+  <p>الاستحقاق: ⭐⭐⭐⭐⭐</p>
+  <p>الرصيد: 0 IQD</p>
+  <p>الإيرادات: 0 IQD</p>
+  <button class="btn">سحب الرصيد</button>
+  <button class="btn">شحن الرصيد</button>
+  <hr>
+  <p><strong>معلومات الارتباط:</strong></p>
+  <p>رقم الهاتف - اسم العميل - نوع المصرف</p>
+  <button class="btn" onclick="logout()">تسجيل خروج</button>
+</div>
+
+<div class="page" id="workPage"><h2>العمل</h2><p>سيتم إضافة المهام هنا.</p></div>
+<div class="page" id="signaturePage"><h2>التوقيع</h2><p>عرض العقود والـ VIP.</p></div>
+<div class="page" id="logPage"><h2>السجل</h2><p>عرض السحب والشحن والمهام.</p></div>
+
+<div class="bottom-nav" id="navBar" style="display:none;">
+  <button onclick="showPage('homePage')">الرئيسية</button>
+  <button onclick="showPage('accountPage')">حسابي</button>
+  <button onclick="showPage('workPage')">العمل</button>
+  <button onclick="showPage('signaturePage')">التوقيع</button>
+  <button onclick="showPage('logPage')">السجل</button>
+</div>
+
+<script>
+  function login() {
+    const phone = document.getElementById('phone').value;
+    if (!phone) return alert("يرجى إدخال رقم الهاتف");
+    localStorage.setItem("phone", phone);
+    document.getElementById("userPhone").innerText = phone;
+    document.getElementById("userName").innerText = "مستخدم MK";
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("homePage").style.display = "block";
+    document.getElementById("navBar").style.display = "flex";
+  }
+
+  function logout() {
+    localStorage.removeItem("phone");
+    location.reload();
+  }
+
+  function showPage(id) {
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+    document.getElementById(id).style.display = "block";
+  }
+
+  // استعادة الجلسة
+  window.onload = () => {
+    const phone = localStorage.getItem("phone");
+    if (phone) {
+      document.getElementById("userPhone").innerText = phone;
+      document.getElementById("userName").innerText = "مستخدم MK";
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("homePage").style.display = "block";
+      document.getElementById("navBar").style.display = "flex";
+    }
+  }
+</script>
+
+</body>
+</html>
